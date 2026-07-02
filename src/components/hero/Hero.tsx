@@ -328,8 +328,7 @@ export default function Hero() {
                   cursor: 'none',
                   transition: 'background 400ms ease',
                 }}
-                onMouseEnter={e => (e.currentTarget.style.background = '#F2EDE4')}
-                onMouseLeave={e => (e.currentTarget.style.background = '#C9B99A')}
+               
               >
                 Request a Viewing
                 <span style={{ fontSize: '14px' }}>→</span>
@@ -358,14 +357,7 @@ export default function Hero() {
                   cursor: 'none',
                   transition: 'all 400ms ease',
                 }}
-                onMouseEnter={e => {
-                  e.currentTarget.style.borderColor = 'rgba(242,237,228,0.5)'
-                  e.currentTarget.style.color = '#F2EDE4'
-                }}
-                onMouseLeave={e => {
-                  e.currentTarget.style.borderColor = 'rgba(242,237,228,0.2)'
-                  e.currentTarget.style.color = 'rgba(242,237,228,0.6)'
-                }}
+                
               >
                 Explore Residences
               </motion.a>
