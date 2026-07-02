@@ -341,12 +341,7 @@ export default function PropertyPreview() {
       cursor: 'none',
       transition: 'background 400ms ease',
     }}
-    onMouseEnter={(e) => {
-      e.currentTarget.style.background = '#F2EDE4'
-    }}
-    onMouseLeave={(e) => {
-      e.currentTarget.style.background = '#C9B99A'
-    }}
+    
   >
     Request Private Viewing →
   </a>
@@ -367,14 +362,7 @@ export default function PropertyPreview() {
       cursor: 'none',
       transition: 'all 300ms ease',
     }}
-    onMouseEnter={(e) => {
-      e.currentTarget.style.borderColor = 'rgba(242,237,228,0.3)'
-      e.currentTarget.style.color = 'rgba(242,237,228,0.7)'
-    }}
-    onMouseLeave={(e) => {
-      e.currentTarget.style.borderColor = 'rgba(242,237,228,0.1)'
-      e.currentTarget.style.color = 'rgba(242,237,228,0.35)'
-    }}
+    
   >
     Back to Collection
   </button>
