@@ -336,7 +336,7 @@ export default function AdminPage() {
             onMouseEnter={e => (e.currentTarget.style.color = '#F2EDE4')}
             onMouseLeave={e => (e.currentTarget.style.color = 'rgba(242,237,228,0.3)')}
           >
-           { ← View Site}
+          ← View Site
           </a>
           <button
             onClick={() => setAuthed(false)}
