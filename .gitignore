@@ -13,3 +13,9 @@ build
 *.rar
 
 .DS_Store
+
+public/videos/*.mp4
+
+public/interiors/grocery.jpg
+public/interiors/toilet.jpg
+
