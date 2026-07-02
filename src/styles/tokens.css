@@ -1,0 +1,35 @@
+:root {
+  /* Core palette */
+  --void:        #050508;
+  --ink:         #0A0A0F;
+  --ink-soft:    #12121A;
+  --ghost:       rgba(242, 237, 228, 0.06);
+  --ghost-md:    rgba(242, 237, 228, 0.12);
+  --ivory:       #F2EDE4;
+  --ivory-muted: #B8B0A4;
+  --travertine:  #C9B99A;
+  --signal:      #4A7FA5;
+  --signal-glow: rgba(74, 127, 165, 0.3);
+
+  /* Typography scale */
+  --font-display: 'Cormorant Garamond', Georgia, serif;
+  --font-body:    'DM Sans', system-ui, sans-serif;
+  --font-mono:    'JetBrains Mono', monospace;
+
+  /* Spacing rhythm */
+  --space-xs:  clamp(0.5rem,  1vw,  0.75rem);
+  --space-sm:  clamp(0.75rem, 1.5vw, 1rem);
+  --space-md:  clamp(1rem,    2vw,  1.5rem);
+  --space-lg:  clamp(2rem,    4vw,  3rem);
+  --space-xl:  clamp(4rem,    8vw,  7rem);
+  --space-2xl: clamp(7rem,   12vw, 12rem);
+
+  /* Motion */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-expo:  cubic-bezier(0.7,  0, 0.84, 0);
+  --ease-cinematic: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --duration-fast:   200ms;
+  --duration-base:   500ms;
+  --duration-slow:   900ms;
+  --duration-cinematic: 1800ms;
+}
