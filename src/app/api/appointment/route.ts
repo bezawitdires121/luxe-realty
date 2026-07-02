@@ -6,6 +6,9 @@ export async function POST(req: NextRequest) {
     const body = await req.json()
     const { name, email, phone, residence, date, time } = body
 
+    // Diagnostic: confirm service role key presence (boolean only)
+    console.log('SUPABASE_SERVICE_ROLE_KEY present:', !!process.env.SUPABASE_SERVICE_ROLE_KEY)
+
     if (!name || !email || !residence || !date || !time) {
       return NextResponse.json(
         { error: 'All fields are required.' },
@@ -27,10 +30,13 @@ export async function POST(req: NextRequest) {
       .select()
       .single()
 
-    if (error) throw new Error(error.message)
+    if (error) {
+      console.error('Supabase appointments insert error details:', error)
+      throw new Error(error.message || 'Supabase insert failed for appointments.')
+    }
 
     // Also save as enquiry for CRM
-    await supabaseAdmin.from('enquiries').insert({
+    const { error: enquiryError } = await supabaseAdmin.from('enquiries').insert({
       name: name.trim(),
       email: email.trim().toLowerCase(),
       phone: phone?.trim() || null,
@@ -42,6 +48,11 @@ export async function POST(req: NextRequest) {
       viewing_time: time,
       viewing_residence: residence,
     })
+
+    if (enquiryError) {
+      console.error('Supabase insert error for enquiry:', enquiryError)
+      throw new Error(enquiryError.message || 'Supabase insert failed for enquiries.')
+    }
 
     // Email notification
     if (process.env.RESEND_API_KEY && process.env.CONTACT_EMAIL) {

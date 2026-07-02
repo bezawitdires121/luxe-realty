@@ -13,10 +13,10 @@ const SLOTS = [
 ]
 
 const INTERESTS = [
-  'Sky Penthouse — Floor 12',
-  'Obsidian Crown — Floor 12',
-  'Sky Villa — Floor 11',
-  'Penthouse Suite — Floor 5',
+  'Sky Penthouse : Floor 12',
+  'Obsidian Crown : Floor 12',
+  'Sky Villa : Floor 11',
+  'Penthouse Suite : Floor 5',
   'Custom Consultation',
 ]
 
