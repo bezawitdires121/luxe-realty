@@ -25,8 +25,8 @@ export default function ThemeToggle() {
         width: '40px',
         height: '22px',
         borderRadius: '11px',
-        border: '1px solid rgba(242,237,228,0.15)',
-        background: isDark ? 'rgba(242,237,228,0.08)' : 'rgba(201,185,154,0.3)',
+        border: '1px solid var(--border)',
+        background: 'var(--surface)',
         cursor: 'none',
         position: 'relative',
         transition: 'all 400ms ease',
@@ -42,7 +42,7 @@ export default function ThemeToggle() {
           width: '14px',
           height: '14px',
           borderRadius: '50%',
-          background: isDark ? '#C9B99A' : '#050508',
+          background: isDark ? 'var(--travertine)' : 'var(--text-primary)',
         }}
       />
     </button>

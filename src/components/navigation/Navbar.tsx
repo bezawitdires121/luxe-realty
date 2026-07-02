@@ -1,5 +1,6 @@
 'use client'
 
+import Link from 'next/link'
 import { useEffect, useState, useRef } from 'react'
 import { motion, AnimatePresence, useMotionValue, useSpring } from 'framer-motion'
 import { useAppStore } from '@/store/useAppStore'
@@ -87,13 +88,14 @@ export default function Navbar() {
           alignItems: 'center',
           justifyContent: 'space-between',
           transition: 'background 500ms ease, backdrop-filter 500ms ease, border-color 500ms ease',
-          background: scrolled ? 'rgba(5,5,8,0.88)' : 'transparent',
+          background: scrolled ? 'var(--header-bg)' : 'transparent',
           backdropFilter: scrolled ? 'blur(20px) saturate(180%)' : 'none',
-          borderBottom: scrolled ? '1px solid rgba(242,237,228,0.05)' : '1px solid transparent',
+          borderBottom: scrolled ? '1px solid var(--header-border)' : '1px solid transparent',
         }}
       >
       {/* Logo */}
-<a href="/"
+<Link
+  href="/"
   style={{
     textDecoration: 'none',
     cursor: 'none',
@@ -128,7 +130,7 @@ export default function Navbar() {
       Residences
     </p>
   </div>
-</a>
+</Link>
 
         {/* Desktop nav */}
         <nav
@@ -204,7 +206,7 @@ export default function Navbar() {
               position: 'fixed',
               inset: 0,
               zIndex: 99,
-              background: 'rgba(5,5,8,0.97)',
+              background: 'var(--nav-overlay-bg)',
               backdropFilter: 'blur(24px)',
               display: 'flex',
               flexDirection: 'column',

@@ -128,12 +128,22 @@ const FLOOR_UNITS: Record<number, FloorUnit[]> = {
     },
   ],
 }
-const FLOORS = Array.from({ length: 13 }, (_, i) => ({
-  floor: 12 - i,
-  label: 12 - i === 0 ? 'G' : String(12 - i),
-  sublabel: 12 - i === 0 ? 'Ground' : null,
-  hasUnits: !!(FLOOR_UNITS[12 - i]?.length),
+const AVAILABLE_FLOORS = Object.keys(FLOOR_UNITS)
+  .map(Number)
+  .sort((a, b) => b - a)
+
+const FLOORS = AVAILABLE_FLOORS.map((floor) => ({
+  floor,
+  label: String(floor),
+  sublabel: null,
+  hasUnits: true,
 }))
+
+const TOTAL_UNITS = Object.values(FLOOR_UNITS).flat().length
+const PENTHOUSES = Object.values(FLOOR_UNITS).flat().filter((unit) => unit.type.toLowerCase().includes('penthouse')).length
+const SOLD_RATIO = TOTAL_UNITS > 0
+  ? Math.round(Object.values(FLOOR_UNITS).flat().filter((unit) => unit.status === 'sold').length / TOTAL_UNITS * 100)
+  : 0
 
 const STATUS_COLOR = {
   available: '#4ade80',
@@ -373,13 +383,15 @@ function BuildingViz({ activeFloor }: { activeFloor: number }) {
 
 export default function TowerDashboard() {
   const { ref, inView } = useInView({ threshold: 0.1 })
-  const [activeFloor, setActiveFloor] = useState(5)
-  const [activeUnit, setActiveUnit] = useState<string | null>('502')
+  const initialFloor = AVAILABLE_FLOORS[0] ?? 12
+  const initialUnit = FLOOR_UNITS[initialFloor]?.[0]?.id ?? null
+  const [activeFloor, setActiveFloor] = useState(initialFloor)
+  const [activeUnit, setActiveUnit] = useState<string | null>(initialUnit)
   const [activeTab, setActiveTab] = useState<'overview' | 'floors' | 'amenities' | 'gallery' | 'location' | 'availability'>('overview')
   const { setCursorVariant } = useAppStore()
 
   const units = FLOOR_UNITS[activeFloor] || []
-  const unit = units.find(u => u.id === activeUnit)
+  const unit = units.find(u => u.id === activeUnit) || units[0] || null
 
   const tabs = [
     { id: 'overview', icon: '⊞', label: 'Overview' },
@@ -438,7 +450,18 @@ export default function TowerDashboard() {
                 color: '#F2EDE4',
                 letterSpacing: '-0.01em',
               }}>
-                LUXE Residences
+                LUXE Tower Residences
+              </p>
+              <p style={{
+                fontFamily: 'JetBrains Mono, monospace',
+                fontSize: '8px',
+                letterSpacing: '0.35em',
+                textTransform: 'uppercase',
+                color: 'rgba(242,237,228,0.3)',
+                marginTop: '0.75rem',
+                lineHeight: 1.5,
+              }}>
+                Skyline penthouses, premium sky villas, and executive residences with private terraces.
               </p>
             </div>
 
@@ -557,7 +580,7 @@ export default function TowerDashboard() {
                 color: '#F2EDE4',
                 letterSpacing: '-0.01em',
               }}>
-                LUXE Tower : 12 Floors
+                LUXE Tower · {AVAILABLE_FLOORS.length} Floors
               </p>
 
               {/* Quick stats */}
@@ -567,10 +590,10 @@ export default function TowerDashboard() {
                 marginTop: '1.5rem',
               }}>
                 {[
-                  { v: '36', l: 'Total Units' },
-                  { v: '4', l: 'Penthouses' },
-                  { v: '78%', l: 'Sold' },
-                ].map(item => (
+                  { v: String(TOTAL_UNITS), l: 'Total Units' },
+                  { v: String(PENTHOUSES), l: 'Sky Penthouses' },
+                  { v: `${SOLD_RATIO}%`, l: 'Sold' },
+                ].map((item) => (
                   <div key={item.l}>
                     <p style={{
                       fontFamily: 'Cormorant Garamond, Georgia, serif',
@@ -628,7 +651,7 @@ export default function TowerDashboard() {
                   key={f.floor}
                   onClick={() => {
                     setActiveFloor(f.floor)
-                    setActiveUnit(null)
+                    setActiveUnit(FLOOR_UNITS[f.floor]?.[0]?.id ?? null)
                   }}
                   onMouseEnter={() => setCursorVariant('hover')}
                   onMouseLeave={() => setCursorVariant('default')}
@@ -703,7 +726,7 @@ export default function TowerDashboard() {
                   letterSpacing: '-0.01em',
                   lineHeight: 1,
                 }}>
-                  Floor {activeFloor === 0 ? 'G' : activeFloor}
+                  Floor {activeFloor}
                 </p>
                 <p style={{
                   fontFamily: 'JetBrains Mono, monospace',
@@ -717,6 +740,9 @@ export default function TowerDashboard() {
                 </p>
               </div>
               <button
+                onClick={() => {
+                  document.getElementById('tower')?.scrollIntoView({ behavior: 'smooth' })
+                }}
                 onMouseEnter={() => setCursorVariant('hover')}
                 onMouseLeave={() => setCursorVariant('default')}
                 style={{
@@ -731,9 +757,8 @@ export default function TowerDashboard() {
                   cursor: 'none',
                   transition: 'border-color 300ms ease',
                 }}
-                
               >
-                Floor Plan ⤢
+                View Floor Plan
               </button>
             </div>
 
@@ -770,7 +795,7 @@ export default function TowerDashboard() {
               {units.length > 0 ? (
                 <Floorplan
                   units={units}
-                  activeUnit={activeUnit}
+                  activeUnit={unit?.id ?? null}
                   onSelect={setActiveUnit}
                 />
               ) : (
