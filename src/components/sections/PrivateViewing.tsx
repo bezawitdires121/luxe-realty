@@ -2,7 +2,7 @@
 
 import { useRef, useState } from 'react'
 import { motion, useInView, AnimatePresence } from 'framer-motion'
-import { useAppStore } from '@/store src/useAppStore'
+import { useAppStore } from '@/store/useAppStore'
 
 type Step = 'select' | 'details' | 'confirm'
 

@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { useAppStore } from '@/store src/useAppStore'
+import { useAppStore } from '@/store/useAppStore'
 
 const FOOTER_LINKS = {
   Properties: [

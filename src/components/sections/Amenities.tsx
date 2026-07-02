@@ -3,7 +3,7 @@
 import { useRef, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useInView } from '@/hooks src/useInView'
-import { useAppStore } from '@/store src/useAppStore'
+import { useAppStore } from '@/store/useAppStore'
 
 export default function Amenities() {
   const { ref, inView } = useInView({ threshold: 0.1 })

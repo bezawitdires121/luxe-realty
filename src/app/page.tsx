@@ -1,7 +1,7 @@
 'use client'
 
 import { useLenis } from '@/hooks src/useLenis'
-import { useAppStore } from '@/store src/useAppStore'
+import { useAppStore } from '@/store/useAppStore'
 import Loader from '@/components/ui/Loader'
 import CustomCursor from '@/components/ui/CustomCursor'
 import Navbar from '@/components/navigation/Navbar'

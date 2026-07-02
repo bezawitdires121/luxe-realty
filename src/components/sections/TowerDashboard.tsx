@@ -4,7 +4,7 @@ import { useRef, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useInView } from '@/hooks src/useInView'
 import type { FloorUnit } from '@/types src'
-import { useAppStore } from '@/store src/useAppStore'
+import { useAppStore } from '@/store/useAppStore'
 const FLOOR_UNITS: Record<number, FloorUnit[]> = {
   12: [
     {

@@ -4,7 +4,7 @@ import { useRef } from 'react'
 import { motion, useInView } from 'framer-motion'
 import { PROPERTIES, AMENITIES_DATA, FLOOR_UNITS } from '@/lib src/data'
 import PropertyCard from '@/components/property/PropertyCard'
-import { useAppStore } from '@/store src/useAppStore'
+import { useAppStore } from '@/store/useAppStore'
 
 export default function Properties() {
   const ref = useRef(null)

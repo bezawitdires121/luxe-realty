@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from 'react'
 import { motion, useMotionValue, useSpring, AnimatePresence } from 'framer-motion'
-import { useAppStore } from '@/store src/useAppStore'
+import { useAppStore } from '@/store/useAppStore'
 
 export default function CustomCursor() {
   const { cursorVariant, cursorLabel } = useAppStore()
