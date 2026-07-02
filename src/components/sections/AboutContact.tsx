@@ -75,11 +75,15 @@ export default function AboutContact() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(form),
       })
-      if (!res.ok) throw new Error()
+      const data = await res.json()
+      if (!res.ok) {
+        throw new Error(data?.error || 'Something went wrong. Please call us directly.')
+      }
       setStatus('success')
-    } catch {
+    } catch (err) {
       setStatus('error')
-      setErrMsg('Something went wrong. Please call us directly.')
+      const message = err instanceof Error ? err.message : 'Something went wrong. Please call us directly.'
+      setErrMsg(message)
     }
   }
 
@@ -177,7 +181,7 @@ export default function AboutContact() {
                 marginBottom: '2rem',
                 fontStyle: 'italic',
               }}>
-                "We do not simply build residences. We architect the conditions for a life lived at its fullest ,  where every material, every proportion, every view has been considered with the weight it deserves."
+                &quot;We do not simply build residences. We architect the conditions for a life lived at its fullest ,  where every material, every proportion, every view has been considered with the weight it deserves.&quot;
               </p>
               <p style={{
                 fontFamily: 'DM Sans, sans-serif',

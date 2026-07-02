@@ -1,36 +1,64 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# LUXE Residences
 
-## Getting Started
+Live demo: https://luxe-residences.vercel.app/
 
-First, run the development server:
+## Overview
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+LUXE Residences is a premium real estate landing experience built with modern web tools. combining immersive storytelling, refined UI interactions, and responsive animation to present a luxury property brand focused on skyline penthouses, sky villas, amenities, and curated private viewings.
+- includes the full frontend experience plus contact and appointment flows powered by Supabase and server-side API routes.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## What’s Included
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+The site is composed of a collection of high-end sections that reflect the live demo:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- **Hero** landing experience with premium branded messaging
+- **Property showcase** with featured residences and collection cards
+- **Tower dashboard** with floor selection, residence details, unit availability, and a stylized floor plan
+- **Amenities** and **interiors** sections that highlight spa, wellness, dining, cinema, and other lifestyle spaces
+- **Penthouses** and **private viewing** experiences with booking workflows
+- **Interactive map** and **testimonials** for credibility and location storytelling
+- **Contact / enquiry forms** with Supabase-backed API routes
+- **Global layout elements** including custom cursor, loader, theme handling, and AI assistant UI
 
-## Learn More
+## Technologies Used
 
-To learn more about Next.js, take a look at the following resources:
+This site is built to feel polished and approachable at the same time. The stack is split between elegant front-end behavior, smooth client-side interactions, and server-powered form handling.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- **Front-end**
+  - Next.js 16 with the App Router
+  - React 19 and TypeScript for strong typing and composable UI
+  - Tailwind CSS + PostCSS for design consistency and fast styling
+  - Framer Motion for fluid animations and page transitions
+  - GSAP + Lenis for silky smooth scrolling and subtle motion effects
+  - React Three Fiber + Drei for immersive 3D and scene visuals
+  - lucide-react for clean iconography
+  - Custom cursor, loading screen, theme toggle, and assistant UI for premium polish
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- **Back-end / API**
+  - Next.js API routes for contact and appointment submissions
+  - Supabase server-side client for enquiries and booking persistence
+  - Optional Resend email integration for notifications when configured
+  - Built-in validation and friendly response handling on the server
 
-## Deploy on Vercel
+- **Data & integrations**
+  - Static data collections for floors, units, amenities, and properties
+  - Dynamic form submission with `fetch()` and JSON payloads
+  - Supabase-backed `enquiries` and `appointments` tables
+  - Live-ready deployment on Vercel
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- **Developer tools**
+  - ESLint and TypeScript for reliable code quality
+  - Prettier with Tailwind plugin for consistent formatting
+  - Tailwind v4 for modern utility-based styling
+  - Vercel-friendly build scripts and app structure
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Why this feels premium
+
+LUXE Residences is designed to look and behave like a high-end property experience, while still being easy to update.
+
+- polished typography and spacious layout
+- smooth motion, layered texture, and refined hover states
+- interactive floorplan and residence details for an engaging tour
+- reliable enquiry and appointment flows that feel direct and personal
+- rich dark palette with warm gold accents for a luxury atmosphere
+

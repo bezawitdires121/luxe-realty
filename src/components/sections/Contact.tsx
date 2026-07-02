@@ -6,9 +6,10 @@ import { motion, useInView } from 'framer-motion'
 export default function Contact() {
   const ref = useRef(null)
   const inView = useInView(ref, { once: true, margin: '-100px' })
-  const [sent, setSent] = useState(false)
+  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle')
+  const [errMsg, setErrMsg] = useState('')
   const [form, setForm] = useState({
-    name: '', email: '', interest: 'Purchase', message: ''
+    name: '', email: '', phone: '', interest: 'Purchase a Residence', budget: 'ETB 50M – 100M', message: ''
   })
 
   const inputStyle = {
@@ -32,6 +33,34 @@ export default function Contact() {
     color: 'rgba(242,237,228,0.35)',
     display: 'block',
     marginBottom: '8px',
+  }
+
+  const submit = async () => {
+    if (!form.name || !form.email || !form.message) {
+      setErrMsg('Please complete all required fields.')
+      setStatus('error')
+      return
+    }
+    setErrMsg('')
+    setStatus('loading')
+
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(form),
+      })
+      const data = await res.json()
+
+      if (!res.ok) {
+        throw new Error(data?.error || 'Something went wrong. Please call us directly.')
+      }
+
+      setStatus('success')
+    } catch (err) {
+      setStatus('error')
+      setErrMsg(err instanceof Error ? err.message : 'Something went wrong. Please call us directly.')
+    }
   }
 
   return (
@@ -76,7 +105,7 @@ export default function Contact() {
             letterSpacing: '-0.02em',
             marginBottom: '2rem',
           }}>
-            Let's Create
+            Let&apos;s Create
             <br />
             <em style={{ color: '#C9B99A' }}>Something Rare</em>
           </h2>
@@ -130,7 +159,7 @@ export default function Contact() {
           animate={inView ? { opacity: 1, x: 0 } : {}}
           transition={{ duration: 1, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
         >
-          {sent ? (
+          {status === 'success' ? (
             <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
@@ -209,7 +238,20 @@ export default function Contact() {
                   value={form.interest}
                   onChange={(e) => setForm({ ...form, interest: e.target.value })}
                 >
-                  {['Purchase', 'Investment Portfolio', 'Private Viewing', 'Interior Design', 'General Enquiry'].map((o) => (
+                  {['Purchase a Residence', 'Investment Portfolio', 'Private Viewing', 'Interior Design', 'General Enquiry'].map((o) => (
+                    <option key={o} value={o} style={{ background: '#0A0A0F' }}>{o}</option>
+                  ))}
+                </select>
+              </div>
+
+              <div>
+                <label style={labelStyle}>Budget</label>
+                <select
+                  style={{ ...inputStyle, cursor: 'pointer' }}
+                  value={form.budget}
+                  onChange={(e) => setForm({ ...form, budget: e.target.value })}
+                >
+                  {['Under ETB 20M', 'ETB 20M – 50M', 'ETB 50M – 100M', 'ETB 100M – 200M', 'Above ETB 200M', 'Prefer not to say'].map((o) => (
                     <option key={o} value={o} style={{ background: '#0A0A0F' }}>{o}</option>
                   ))}
                 </select>
@@ -233,31 +275,41 @@ export default function Contact() {
               </div>
 
               {/* Submit */}
+              {errMsg && (
+                <p style={{
+                  fontFamily: 'DM Sans, sans-serif',
+                  fontSize: '0.85rem',
+                  color: '#e05a5a',
+                  marginBottom: '1rem',
+                }}>
+                  {errMsg}
+                </p>
+              )}
+
               <button
-                onClick={() => {
-                  if (form.name && form.email) setSent(true)
-                }}
+                onClick={submit}
+                disabled={status === 'loading'}
                 style={{
                   padding: '1.1rem 2rem',
-                  background: '#C9B99A',
+                  background: status === 'loading' ? 'rgba(201,185,154,0.5)' : '#C9B99A',
                   color: '#050508',
                   border: 'none',
                   fontFamily: 'JetBrains Mono, monospace',
                   fontSize: '10px',
                   letterSpacing: '0.4em',
                   textTransform: 'uppercase',
-                  cursor: 'pointer',
+                  cursor: status === 'loading' ? 'default' : 'pointer',
                   transition: 'background 400ms ease',
                   width: '100%',
                 }}
                 onMouseEnter={(e) => {
-                  (e.target as HTMLButtonElement).style.background = '#F2EDE4'
+                  if (status !== 'loading') (e.target as HTMLButtonElement).style.background = '#F2EDE4'
                 }}
                 onMouseLeave={(e) => {
-                  (e.target as HTMLButtonElement).style.background = '#C9B99A'
+                  if (status !== 'loading') (e.target as HTMLButtonElement).style.background = '#C9B99A'
                 }}
               >
-                Submit Private Enquiry
+                {status === 'loading' ? 'Sending…' : 'Submit Private Enquiry'}
               </button>
 
               <p style={{

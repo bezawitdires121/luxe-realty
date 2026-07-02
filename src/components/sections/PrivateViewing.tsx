@@ -37,7 +37,11 @@ export default function PrivateViewing() {
   const canProceed = selectedDay !== null && selectedTime !== null
 
   const handleSubmit = async () => {
-    if (!form.name || !form.email) return
+    if (!form.name || !form.email || selectedDay === null || !selectedTime) {
+      setError('Please complete all required fields before confirming.')
+      return
+    }
+
     setLoading(true)
     setError('')
 
@@ -60,9 +64,10 @@ export default function PrivateViewing() {
       const data = await res.json()
       if (!res.ok) throw new Error(data.error || 'Request failed')
       setDone(true)
-    } catch (err: any) {
+    } catch (err) {
       console.error('Appointment error:', err)
-      setError(err.message || 'Something went wrong. Please try again.')
+      const message = err instanceof Error ? err.message : String(err)
+      setError(message || 'Something went wrong. Please try again.')
     } finally {
       setLoading(false)
     }
