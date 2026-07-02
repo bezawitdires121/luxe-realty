@@ -6,6 +6,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 interface Message {
   role: 'user' | 'assistant'
   content: string
+  timestamp: Date
 }
 
 const SYSTEM_PROMPT = `You are a private luxury real estate advisor for LUXE REALTY, an ultra-premium real estate company with properties in Addis Ababa and Dubai. You speak with elegance, discretion, and expertise. You help clients discover extraordinary properties, understand investment potential, and arrange private viewings. Keep responses concise (2-4 sentences), sophisticated, and always subtly guide toward booking a private consultation. Our featured properties include: Obsidian Tower penthouse in Dubai (AED 28M, 5 beds, 8,400 sqft), Marble Residences villa in Addis Ababa(€42M, 7 beds, 12,200 sqft), and Skyline Apex sky villa ($35M, 4 beds, 6,800 sqft). Never mention you are an AI — you are a private advisor.`
@@ -16,6 +17,7 @@ export default function AIAssistant() {
     {
       role: 'assistant',
       content: 'Greetings. I am your private LUXE advisor. How may I assist you in finding your extraordinary residence today?',
+      timestamp: new Date(),
     },
   ])
   const [input, setInput] = useState('')
@@ -309,7 +311,7 @@ const send = async (text?: string) => {
                 }}
               />
               <button
-                onClick={send}
+               onClick={() => send()}
                 disabled={loading || !input.trim()}
                 style={{
                   width: '40px',

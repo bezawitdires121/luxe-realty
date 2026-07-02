@@ -1,1 +1,3 @@
-import { residences, amenities, FLOOR_UNITS } from '@/lib src/data'
+export { residences } from './residences'
+export { amenities } from './amenities'
+export { FLOOR_UNITS } from './floorUnits'

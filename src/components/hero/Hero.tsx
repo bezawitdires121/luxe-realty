@@ -311,13 +311,8 @@ export default function Hero() {
              <motion.a
   href="#contact"
   whileTap={{ scale: 0.97 }}
-  onMouseEnter={() => {
-    setCursorVariant('hover')
-    setCursorLabel('')
-  }}
-  onMouseLeave={() => {
-    setCursorVariant('default')
-  }}
+  onMouseEnter={() => { setCursorVariant('hover'); setCursorLabel('') }}
+  onMouseLeave={() => setCursorVariant('default')}
   style={{
     display: 'inline-flex',
     alignItems: 'center',
@@ -333,6 +328,7 @@ export default function Hero() {
     cursor: 'none',
     transition: 'background 400ms ease',
   }}
+  
 >
   Request a Viewing
   <span style={{ fontSize: '14px' }}>→</span>

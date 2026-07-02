@@ -21,8 +21,8 @@ const STATS: StatItem[] = [
 
 function AnimatedNumber({ value, suffix, prefix = '', decimals = 0, run }: StatItem & { run: boolean }) {
   const [display, setDisplay] = useState(0)
-  const rafRef = useRef<number>()
-  const startRef = useRef<number>()
+  const rafRef = useRef<number>(null)
+  const startRef = useRef<number>(null)
 
   useEffect(() => {
     if (!run) return

@@ -103,14 +103,7 @@ export default function Properties() {
             cursor: 'none',
             transition: 'color 300ms ease, border-color 300ms ease',
           }}
-          onMouseEnter={e => {
-            e.currentTarget.style.color = '#C9B99A'
-            e.currentTarget.style.borderColor = '#C9B99A'
-          }}
-          onMouseLeave={e => {
-            e.currentTarget.style.color = 'rgba(201,185,154,0.6)'
-            e.currentTarget.style.borderColor = 'rgba(201,185,154,0.25)'
-          }}
+          
         >
           View All Collection →
         </motion.a>

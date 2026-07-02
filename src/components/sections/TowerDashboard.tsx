@@ -9,6 +9,7 @@ const FLOOR_UNITS: Record<number, FloorUnit[]> = {
   12: [
     {
       id: '1201',
+       floor: 12,
       type: 'Sky Penthouse',
       status: 'available',
       beds: 4,
@@ -19,6 +20,7 @@ const FLOOR_UNITS: Record<number, FloorUnit[]> = {
     },
     {
       id: '1202',
+       floor: 12,
       type: 'Sky Penthouse',
       status: 'reserved',
       beds: 4,
@@ -32,6 +34,7 @@ const FLOOR_UNITS: Record<number, FloorUnit[]> = {
   11: [
     {
       id: '1101',
+      floor: 11,
       type: 'Signature Residence',
       status: 'available',
       beds: 3,
@@ -42,6 +45,7 @@ const FLOOR_UNITS: Record<number, FloorUnit[]> = {
     },
     {
       id: '1102',
+       floor: 11,
       type: 'Signature Residence',
       status: 'sold',
       beds: 3,
@@ -55,6 +59,7 @@ const FLOOR_UNITS: Record<number, FloorUnit[]> = {
   10: [
     {
       id: '1001',
+       floor: 10,
       type: 'Luxury Residence',
       status: 'available',
       beds: 3,
@@ -65,6 +70,7 @@ const FLOOR_UNITS: Record<number, FloorUnit[]> = {
     },
     {
       id: '1002',
+       floor: 10,
       type: 'Luxury Residence',
       status: 'reserved',
       beds: 3,
@@ -75,6 +81,7 @@ const FLOOR_UNITS: Record<number, FloorUnit[]> = {
     },
     {
       id: '1003',
+      floor: 10,
       type: 'Luxury Residence',
       status: 'sold',
       beds: 2,
@@ -88,6 +95,7 @@ const FLOOR_UNITS: Record<number, FloorUnit[]> = {
   9: [
     {
       id: '901',
+       floor: 9,
       type: 'Executive Residence',
       status: 'available',
       beds: 2,
@@ -98,6 +106,7 @@ const FLOOR_UNITS: Record<number, FloorUnit[]> = {
     },
     {
       id: '902',
+       floor: 9,
       type: 'Executive Residence',
       status: 'reserved',
       beds: 2,
@@ -108,6 +117,7 @@ const FLOOR_UNITS: Record<number, FloorUnit[]> = {
     },
     {
       id: '903',
+       floor: 9,
       type: 'Executive Residence',
       status: 'sold',
       beds: 2,

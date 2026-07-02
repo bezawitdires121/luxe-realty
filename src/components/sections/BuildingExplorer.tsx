@@ -2,7 +2,7 @@
 
 import { useState, useRef } from 'react'
 import { motion, AnimatePresence, useInView } from 'framer-motion'
-
+import type { ReactElement } from 'react'
 const FLOORS = [
   { floor: 12, label: '12', units: 2 },
   { floor: 11, label: '11', units: 2 },
@@ -144,7 +144,7 @@ function FloorplanSVG({ activeUnit, onSelect }: { activeUnit: string | null; onS
 
 // Interior room scene SVG (architectural renders)
 function RoomVisual({ roomId }: { roomId: string }) {
-  const svgs: Record<string, JSX.Element> = {
+const svgs: Record<string, ReactElement> = {
     living: (
       <svg viewBox="0 0 600 380" xmlns="http://www.w3.org/2000/svg" style={{ width: '100%', height: '100%' }}>
         <defs>
