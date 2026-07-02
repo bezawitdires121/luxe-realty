@@ -338,8 +338,7 @@ export default function Hero() {
               <motion.a
                 href="#residences"
                 whileTap={{ scale: 0.97 }}
-                onMouseEnter={() => setCursorVariant('hover')}
-                onMouseLeave={() => setCursorVariant('default')}
+  
                 style={{
                   display: 'inline-flex',
                   alignItems: 'center',
