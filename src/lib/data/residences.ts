@@ -44,7 +44,7 @@ export const residences: Property[] = [
     description: 'Four bedroom sky villa with floor-to-ceiling glazing and a private terrace suspended above the Addis Ababa skyline.',
     features: ['Sky terrace', 'Jacuzzi', 'Smart home', 'Gym', 'Concierge', 'Valet'],
     images: ['/interiors/kitchen.jpg', '/interiors/living.jpg'],
-    videoSrc: '/videos/building.mp4',
+    videoSrc: '/interiors/tower.jpg',
     accentColor: '#4A7FA5',
     coordinates: { lat: 8.9806, lng: 38.7578 },
   },

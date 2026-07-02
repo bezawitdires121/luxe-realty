@@ -494,7 +494,7 @@ export default function TowerDashboard() {
               background: 'linear-gradient(135deg, #080a14 0%, #0d1020 100%)',
             }}>
               <video
-                src="/videos/tower.jpg"
+                src="/interiors/tower.jpg"
                 autoPlay
                 muted
                 loop
