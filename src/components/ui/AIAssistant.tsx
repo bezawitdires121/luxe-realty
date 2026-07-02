@@ -9,8 +9,6 @@ interface Message {
   timestamp: Date
 }
 
-const SYSTEM_PROMPT = `You are a private luxury real estate advisor for LUXE REALTY, an ultra-premium real estate company with properties in Addis Ababa and Dubai. You speak with elegance, discretion, and expertise. You help clients discover extraordinary properties, understand investment potential, and arrange private viewings. Keep responses concise (2-4 sentences), sophisticated, and always subtly guide toward booking a private consultation. Our featured properties include: Obsidian Tower penthouse in Dubai (AED 28M, 5 beds, 8,400 sqft), Marble Residences villa in Addis Ababa(€42M, 7 beds, 12,200 sqft), and Skyline Apex sky villa ($35M, 4 beds, 6,800 sqft). Never mention you are an AI — you are a private advisor.`
-
 export default function AIAssistant() {
   const [open, setOpen] = useState(false)
   const [messages, setMessages] = useState<Message[]>([
@@ -28,48 +26,79 @@ export default function AIAssistant() {
     bottomRef.current?.scrollIntoView({ behavior: 'smooth' })
   }, [messages])
 
-const send = async (text?: string) => {
-  const content = (text || input).trim()
-  if (!content || loading) return
+  const localFallbackReply = (question: string) => {
+    const normalized = question.toLowerCase()
 
-  const userMsg: Message = { role: 'user', content, timestamp: new Date() }
-  setMessages(p => [...p, userMsg])
-  setInput('')
-  setLoading(true)
+    if (/(contact|phone|call|number|reach)/.test(normalized)) {
+      return 'For discrete private viewings, please call +251 11 123 4567 or email private@luxerealty.et.'
+    }
 
-  try {
-    const res = await fetch('/api/chat', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        messages: [...messages, userMsg].map(m => ({
-          role: m.role,
-          content: m.content,
-        })),
-      }),
-    })
-    const data = await res.json()
-    if (!res.ok) throw new Error(data.error)
-    setMessages(p => [...p, {
-      role: 'assistant',
-      content: data.content,
-      timestamp: new Date(),
-    }])
-  } catch (err: any) {
-    setMessages(p => [...p, {
-      role: 'assistant',
-      content: 'My apologies — please call us directly at +251 11 123 4567.',
-      timestamp: new Date(),
-    }])
-  } finally {
-    setLoading(false)
+    if (/(price|cost|budget|etb|m|million|penthouse|villa|residence|sky villa|unit)/.test(normalized)) {
+      return 'Our residences span luxury 1BR units to sky penthouses. I can arrange a private preview and share exact pricing for the perfect property.'
+    }
+
+    if (/(viewing|tour|visit|private viewing|arrange|appointment)/.test(normalized)) {
+      return 'I would be delighted to arrange a private viewing. Please share your preferred date, location, and property type.'
+    }
+
+    if (/(hey|hello|hi|good morning|good afternoon|good evening)/.test(normalized)) {
+      return 'Welcome. I am your private LUXE advisor. How may I assist you in finding your extraordinary residence today?'
+    }
+
+    return 'I am here to guide you through our most extraordinary residences in Addis Ababa and Dubai. Ask me about properties, pricing, or private viewings.'
   }
-}
+
+  const send = async (text?: string) => {
+    const content = (text || input).trim()
+    if (!content || loading) return
+
+    const userMsg: Message = { role: 'user', content, timestamp: new Date() }
+    const history = [...messages, userMsg]
+    setMessages(history)
+    setInput('')
+    setLoading(true)
+
+    try {
+      const res = await fetch('/api/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          messages: history.map((m) => ({ role: m.role, content: m.content })),
+        } ),
+      })
+
+      const data = await res.json()
+      const assistantText = res.ok && data?.content
+        ? data.content
+        : localFallbackReply(content)
+
+      setMessages((prev) => [
+        ...prev,
+        {
+          role: 'assistant',
+          content: assistantText,
+          timestamp: new Date(),
+        },
+      ])
+    } catch {
+      setMessages((prev) => [
+        ...prev,
+        {
+          role: 'assistant',
+          content: localFallbackReply(content),
+          timestamp: new Date(),
+        },
+      ])
+    } finally {
+      setLoading(false)
+    }
+  }
 
   return (
     <>
       {/* Floating trigger button */}
       <motion.button
+        type="button"
         initial={{ opacity: 0, scale: 0.8 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ delay: 2, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
@@ -194,6 +223,7 @@ const send = async (text?: string) => {
               </div>
 
               <button
+                type="button"
                 onClick={() => setOpen(false)}
                 style={{
                   background: 'none',
@@ -311,7 +341,8 @@ const send = async (text?: string) => {
                 }}
               />
               <button
-               onClick={() => send()}
+                type="button"
+                onClick={() => send()}
                 disabled={loading || !input.trim()}
                 style={{
                   width: '40px',

@@ -11,17 +11,38 @@ LUXE Residences:
 - Amenities: Private spa, cinema, sky lounge, fine dining, gym, market, parking
 - Contact: +251 11 123 4567 | private@luxerealty.et`
 
+const localFallbackReply = (messages: { role: string; content: string }[]) => {
+  const last = messages[messages.length - 1]?.content?.toLowerCase() ?? ''
+
+  if (/(contact|phone|call|number|reach)/.test(last)) {
+    return 'For discrete private viewings, please call +251 11 123 4567 or email private@luxerealty.et.'
+  }
+
+  if (/(price|cost|budget|etb|million|m|penthouse|villa|residence|sky villa|unit)/.test(last)) {
+    return 'Our residences range from luxury 1BR homes to sky penthouses. I can share exact pricing and arrange a private viewing when you are ready.'
+  }
+
+  if (/(viewing|tour|visit|private viewing|arrange|appointment)/.test(last)) {
+    return 'I would be delighted to arrange a private viewing. Please tell me your preferred date and property type.'
+  }
+
+  if (/(hey|hello|hi|good morning|good afternoon|good evening)/.test(last)) {
+    return 'Welcome. I am your private LUXE advisor. How may I assist you in finding your extraordinary residence today?'
+  }
+
+  return 'I am here to guide you through the most extraordinary residences in Addis Ababa and Dubai. Ask me about properties, pricing, or private viewings.'
+}
+
 export async function POST(req: NextRequest) {
   try {
     const { messages } = await req.json()
 
     const apiKey = process.env.ANTHROPIC_API_KEY
     if (!apiKey) {
-      console.error('ANTHROPIC_API_KEY not set in .env.local')
-      return NextResponse.json(
-        { error: 'Configuration error' },
-        { status: 500 }
-      )
+      console.warn('ANTHROPIC_API_KEY not set; using fallback chat response.')
+      return NextResponse.json({
+        content: localFallbackReply(messages),
+      })
     }
 
     const response = await fetch('https://api.anthropic.com/v1/messages', {
@@ -43,16 +64,18 @@ export async function POST(req: NextRequest) {
 
     if (!response.ok) {
       console.error('Anthropic API error:', data)
-      throw new Error(data.error?.message || 'API request failed')
+      return NextResponse.json({
+        content: localFallbackReply(messages),
+      })
     }
 
     return NextResponse.json({
-      content: data.content?.[0]?.text ?? 'Allow me a moment to assist you.',
+      content: data.content?.[0]?.text ?? localFallbackReply(messages),
     })
-  } catch (err: any) {
-    console.error('Chat route error:', err.message)
+  } catch (err) {
+    console.error('Chat route error:', err instanceof Error ? err.message : 'Unknown error')
     return NextResponse.json(
-      { error: err.message || 'Server error' },
+      { error: (err instanceof Error ? err.message : 'Server error') },
       { status: 500 }
     )
   }

@@ -1,6 +1,6 @@
 'use client'
 
-import { useRef, useState } from 'react'
+import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useInView } from '@/hooks src/useInView'
 import type { FloorUnit } from '@/types src'
@@ -486,38 +486,51 @@ export default function TowerDashboard() {
           </div>
 
           {/* Building visualization */}
-          <div style={{ position: 'relative', overflow: 'hidden' }}>
-            {/* Video or 3D building */}
-            <div style={{
-              position: 'absolute',
-              inset: 0,
-              background: 'linear-gradient(135deg, #080a14 0%, #0d1020 100%)',
-            }}>
-              <video
-                src="/interiors/tower.jpg"
-                autoPlay
-                muted
-                loop
-                playsInline
-                style={{
-                  width: '100%',
-                  height: '100%',
-                  objectFit: 'cover',
-                  opacity: 0.45,
-                }}
-                onError={e => { (e.target as HTMLVideoElement).style.display = 'none' }}
-              />
-            </div>
+          <div
+            style={{
+              position: 'relative',
+              overflow: 'hidden',
+              width: '100%',
+              height: '100%',
+            }}
+          >
+            {/* Background layer */}
+            <div
+              style={{
+                position: 'absolute',
+                inset: 0,
+                background: 'linear-gradient(135deg, #080a14 0%, #0d1020 100%)',
+              }}
+            />
 
-            {/* Building SVG overlay */}
-            <div style={{
-              position: 'absolute',
-              right: '2rem',
-              top: '50%',
-              transform: 'translateY(-50%)',
-              width: '160px',
-              height: '220px',
-            }}>
+            {/* Image */}
+            <motion.img
+              src="/interiors/tower.jpg"
+              alt="Tower"
+              initial={{ scale: 1.1, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ duration: 1.2, ease: 'easeOut' }}
+              style={{
+                position: 'absolute',
+                inset: 0,
+                width: '100%',
+                height: '100%',
+                objectFit: 'cover',
+              }}
+            />
+
+            {/* SVG overlay */}
+            <div
+              style={{
+                position: 'absolute',
+                right: '2rem',
+                top: '50%',
+                transform: 'translateY(-50%)',
+                width: '160px',
+                height: '220px',
+                zIndex: 2,
+              }}
+            >
               <BuildingViz activeFloor={activeFloor} />
             </div>
 
@@ -544,7 +557,7 @@ export default function TowerDashboard() {
                 color: '#F2EDE4',
                 letterSpacing: '-0.01em',
               }}>
-                LUXE Tower — 12 Floors
+                LUXE Tower : 12 Floors
               </p>
 
               {/* Quick stats */}
