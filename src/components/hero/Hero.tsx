@@ -308,31 +308,35 @@ export default function Hero() {
 
             <div style={{ display: 'flex', gap: '1rem' }}>
               {/* Primary CTA */}
-              <motion.a
-                href="#contact"
-                whileTap={{ scale: 0.97 }}
-                onMouseEnter={() => { setCursorVariant('hover'); setCursorLabel('') }}
-                onMouseLeave={() => setCursorVariant('default')}
-                style={{
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  gap: '0.75rem',
-                  padding: '0.95rem 2rem',
-                  background: '#C9B99A',
-                  fontFamily: 'JetBrains Mono, monospace',
-                  fontSize: '9px',
-                  letterSpacing: '0.35em',
-                  textTransform: 'uppercase',
-                  color: '#050508',
-                  textDecoration: 'none',
-                  cursor: 'none',
-                  transition: 'background 400ms ease',
-                }}
-               
-              >
-                Request a Viewing
-                <span style={{ fontSize: '14px' }}>→</span>
-              </motion.a>
+             <motion.a
+  href="#contact"
+  whileTap={{ scale: 0.97 }}
+  onMouseEnter={() => {
+    setCursorVariant('hover')
+    setCursorLabel('')
+  }}
+  onMouseLeave={() => {
+    setCursorVariant('default')
+  }}
+  style={{
+    display: 'inline-flex',
+    alignItems: 'center',
+    gap: '0.75rem',
+    padding: '0.95rem 2rem',
+    background: '#C9B99A',
+    fontFamily: 'JetBrains Mono, monospace',
+    fontSize: '9px',
+    letterSpacing: '0.35em',
+    textTransform: 'uppercase',
+    color: '#050508',
+    textDecoration: 'none',
+    cursor: 'none',
+    transition: 'background 400ms ease',
+  }}
+>
+  Request a Viewing
+  <span style={{ fontSize: '14px' }}>→</span>
+</motion.a>
 
               {/* Secondary */}
               <motion.a
